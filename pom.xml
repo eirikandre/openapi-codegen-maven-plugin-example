@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>swagger-example</artifactId>
-    <groupId>no.eidsa.swagger</groupId>
+    <artifactId>openapi-example-top</artifactId>
+    <groupId>no.eidsa.openapi</groupId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <properties>
         <swagger-annotations.version>1.5.3</swagger-annotations.version>
@@ -17,83 +17,62 @@
 
     </properties>
 
-    <dependencies>
+    <modules>
+        <module>jaxrs</module>
+        <module>feign</module>
+    </modules>
 
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <scope>provided</scope>
-            <version>${swagger-annotations.version}</version>
+    <dependencyManagement>
 
-        </dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <scope>provided</scope>
-            <version>${validation-api.version}</version>
+        <dependencies>
 
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson-annotations.version}</version>
+            <dependency>
+                <groupId>javax.ws.rs</groupId>
+                <artifactId>javax.ws.rs-api</artifactId>
+                <version>2.0.1</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <scope>provided</scope>
+                <version>${swagger-annotations.version}</version>
 
-        </dependency>
-    </dependencies>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <scope>provided</scope>
+                <version>${validation-api.version}</version>
+
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-annotations.version}</version>
+
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>3.3.4</version>
-
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${basedir}/src/main/resources/META-INF/resources/api.yaml</inputSpec>
-                            <generatorName>org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen</generatorName>
-                            <generateSupportingFiles>false</generateSupportingFiles>
-                            <apiPackage>no.eidsa.swagger.example.api</apiPackage>
-                            <configOptions>
-                                <interfaceOnly>true</interfaceOnly>
-                                <sourceFolder>main/java</sourceFolder>
-                                <modelPackage>no.eidsa.swagger.example.api.domain</modelPackage>
-                                <dateLibrary>java8</dateLibrary>
-                            </configOptions>
-                            <modelNameSuffix>TO</modelNameSuffix>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/api.yaml</include>
-                </includes>
-            </resource>
-        </resources>
-
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.openapitools</groupId>
+                    <artifactId>openapi-generator-maven-plugin</artifactId>
+                    <version>4.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
 
     </build>
 </project>
